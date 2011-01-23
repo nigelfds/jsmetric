@@ -1,0 +1,12 @@
+*** To get started you need:
+
+Ruby 1.9.2
+Bundler 1.x
+
+This project contains a .rvmrc file for use with RVM.
+This readme assumes you are using a Unix/OSx environment.
+
+*** Setting up dev environment
+
+$ bundle install
+$ ./build
