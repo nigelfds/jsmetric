@@ -8,5 +8,4 @@ This readme assumes you are using a Unix/OSx environment.
 
 *** Setting up dev environment
 
-$ bundle install
 $ ./build
