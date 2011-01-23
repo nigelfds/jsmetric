@@ -8,7 +8,7 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     When I run the complexity analysis on it
     Then the number of functions is reported as "1"
 
-      Scenario: Single javascript function
+  Scenario: Multiple javascript functions
     Given javascript code as:
     """
       function foo() {};
