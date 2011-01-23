@@ -9,3 +9,8 @@ This readme assumes you are using a Unix/OSx environment.
 *** Setting up dev environment
 
 $ ./build
+
+
+TODO:
+
+JSLint options are burried in the options.js file. Need to pull these out.
