@@ -14,3 +14,20 @@ $ ./build
 TODO:
 
 JSLint options are burried in the options.js file. Need to pull these out.
+
+Target Spec for reference:
+    * add 1 for each if statement
+    * add 1 for each for statement
+    * add 1 for each while loop
+    * add 1 for each do-while loop
+    * add 1 for each && (an implied if statement)
+    * add 1 for each || (an implied if statement)
+    * add 1 for each ? (an implied if statement)
+    * add 1 for each . (an implied if statement)    ---> hmmm... what?
+    * add 1 for each case statement
+    * add 1 for each default statement
+    * add 1 for each catch statement
+    * add 1 for each finaly statement
+    * add 1 for each continue statement
+
+Need rake targets for report generation

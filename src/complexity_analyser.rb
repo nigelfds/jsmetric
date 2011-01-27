@@ -8,7 +8,6 @@ class ComplexityAnalyser
     @functions = []
 
     @tree_hash.each do |node|
-      p node
       compute_complexity_of node
     end
   end
@@ -34,8 +33,8 @@ class ComplexityAnalyser
     end
   end
 
-  def iterate_and_compute_for array
-    array.each do |item|
+  def iterate_and_compute_for( block)
+    block.each do |item|
       compute_complexity_of item
     end
   end

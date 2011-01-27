@@ -16,11 +16,12 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 
-# Build tasks
+# other Project tasks
+Dir[File.join(File.dirname(__FILE__),"tasks","*.rb")].each {|file| require file }
 
 namespace :jsmetrics do
   desc "master build"
-  task :build => [:spec,"cucumber"] 
+  task :build => [:spec, "cucumber"]
 end
 
 task :default => ["jsmetrics:build"]
