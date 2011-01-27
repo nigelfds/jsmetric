@@ -11,9 +11,17 @@ This readme assumes you are using a Unix/OSx environment.
 $ ./build
 
 
-TODO:
+*** Usage
 
-JSLint options are burried in the options.js file. Need to pull these out.
+LOC-Function Map:
+
+$ rake run:loc_func_map["path/to/javascript/dir/"]
+
+Cyclometric Complexity
+$ rake run:cc["path/to/javascript/file.js"]
+
+
+*** Backlog/Future Work
 
 Target Spec for reference:
     * add 1 for each if statement
@@ -30,4 +38,5 @@ Target Spec for reference:
     * add 1 for each finaly statement
     * add 1 for each continue statement
 
-Need rake targets for report generation
+TODO: JSLint options are burried in the options.js file. Need to pull these out.
+TODO: Sample runs against existing libs like Jquery, YUI etc.

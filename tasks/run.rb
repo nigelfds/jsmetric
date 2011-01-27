@@ -1,12 +1,10 @@
-namespace :spike do
+namespace :run do
 
   desc "Produces a CSV list of LOC & number of functions per js file in a given directory (recursive)"
-  task :loc_map do
-
-    source_dir = "/Users/nigelfer/Development/nokia/trunk/static-resources/core"
+  task :loc_func_map, :dir do |task, args|
+    raise "No Dir specified" unless args.dir
     puts "Name,Dir,LOC,Functions"
-    Dir.chdir(source_dir) do
-
+    Dir.chdir(args.dir) do
       js_files = Dir.glob(File.join("**", "*.js"))
       js_files.each do |file|
         contents        = File.open(file, 'r') { |f| f.read }
@@ -16,6 +14,13 @@ namespace :spike do
       end
     end
 
+  end
+
+
+  desc "Produces a CSV list of functions and thier Cyclometric complexity in a JS file"
+  task :cc, :file do |task, args|
+    raise "No file specified" unless args.file
+    raise "Sorry.. this target is WIP :-("
   end
 
 end
