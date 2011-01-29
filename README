@@ -35,8 +35,8 @@ Target Spec for reference:
     * add 1 for each case statement
     * add 1 for each default statement
     * add 1 for each catch statement
-    * add 1 for each finaly statement
+    * add 1 for each finally statement
     * add 1 for each continue statement
 
-TODO: JSLint options are burried in the options.js file. Need to pull these out.
+TODO: JSLint options are buried in the options.js file. Need to pull these out.
 TODO: Sample runs against existing libs like Jquery, YUI etc.
