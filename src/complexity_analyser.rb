@@ -6,6 +6,7 @@ class ComplexityAnalyser
     @js_lint   = JSLint.new code
     @tree_hash = @js_lint.tree
     @functions = []
+    @complexity_keywords = ["if", "for", "while", "do"]
 
     @tree_hash.each do |node|
       compute_complexity_of node
@@ -29,10 +30,9 @@ class ComplexityAnalyser
       @functions << {:name => name, :complexity => 1}
     end
 
-    if node["value"].eql?("if")
+    if @complexity_keywords.include?(node["value"])
       @functions.last[:complexity] += 1
     end
-    
 
     iterate_and_compute_for node["first"]
     iterate_and_compute_for node["second"]
