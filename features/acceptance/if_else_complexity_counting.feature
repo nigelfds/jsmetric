@@ -154,3 +154,24 @@ Feature: Calculate IF/ELSE complexity for a stand alone Javascript function
     """
     When I run the complexity analysis on it
     Then the complexity is reported as "5"
+
+  Scenario: IF statement implied with ?
+    Given javascript code as:
+    """
+      function foo() {
+        (true)? true : false;
+      }
+    """
+    When I run the complexity analysis on it
+    Then the complexity is reported as "2"
+
+
+  Scenario: IF statement nested inside a ternary operator
+    Given javascript code as:
+    """
+      function foo() {
+        (true)? "" : (false) ? true :"" ;
+      }
+    """
+    When I run the complexity analysis on it
+    Then the complexity is reported as "3"

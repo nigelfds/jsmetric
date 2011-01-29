@@ -6,7 +6,7 @@ class ComplexityAnalyser
     @js_lint   = JSLint.new code
     @tree_hash = @js_lint.tree
     @functions = []
-    @complexity_keywords = ["if", "for", "while", "do", "&&", "||"]
+    @complexity_keywords = ["if", "for", "while", "do", "&&", "||", "?", "default", "case"]
 
     @tree_hash.each do |node|
       compute_complexity_of node
@@ -36,6 +36,7 @@ class ComplexityAnalyser
 
     iterate_and_compute_for node["first"]
     iterate_and_compute_for node["second"]
+    iterate_and_compute_for node["third"]
     iterate_and_compute_for node["block"]
     iterate_and_compute_for node["else"]
   end
