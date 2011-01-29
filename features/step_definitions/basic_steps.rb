@@ -10,9 +10,23 @@ When /^I run the complexity analysis on it$/ do
 end
 
 Then /^the number of functions is reported as "([^"]*)"$/ do |num_funcs|
-  @analyser.function_count.should eql num_funcs.to_i
+  @analyser.functions.count.should eql num_funcs.to_i
 end
 
 Then /^the complexity is reported as "([^"]*)"$/ do |complexity|
   @analyser.complexity.should eql complexity.to_i
 end
+
+And /^the function name is "([^"]*)"$/ do |func_name|
+  @analyser.functions.first[:name].should eql func_name
+end
+
+And /^the function names are:$/ do |table|
+  p @analyser.functions
+  table.hashes.each do |function|
+    match = @analyser.functions.find {|func| func[:name].eql?(function["Name"])}
+    match.should_not be_nil, "Could not find function with name '#{function["Name"]}' "
+  end
+
+end
+

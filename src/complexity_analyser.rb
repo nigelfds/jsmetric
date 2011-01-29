@@ -20,23 +20,33 @@ class ComplexityAnalyser
     @functions.last[:complexity]
   end
 
-  def compute_complexity_of node
-    if (node["arity"] == "statement") && (node["value"] == "function")
-      @functions << {:name => node["name"], :complexity => 1}
-      iterate_and_compute_for node["block"]
+  private
+  def compute_complexity_of(node)
+    return if node.nil?
+
+    if node["value"].eql?("function")
+      node["name"].empty? ? name = "anonymous/inner" : name = node["name"]
+      @functions << {:name => name, :complexity => 1}
     end
 
-    if (node["arity"] == "statement") && (node["value"] == "if")
+    if node["value"].eql?("if")
       @functions.last[:complexity] += 1
-      iterate_and_compute_for node["block"]
-      compute_complexity_of node["else"] if node["else"] and not node["else"].empty?
+    end
+    
+
+    iterate_and_compute_for node["first"]
+    iterate_and_compute_for node["second"]
+    iterate_and_compute_for node["block"]
+    iterate_and_compute_for node["else"]
+  end
+
+  def iterate_and_compute_for(node)
+    if node.is_a?(Array)
+      node.each { |item| compute_complexity_of item }
+    else
+      compute_complexity_of node
     end
   end
 
-  def iterate_and_compute_for( block)
-    block.each do |item|
-      compute_complexity_of item
-    end
-  end
 end
 

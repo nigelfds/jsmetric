@@ -7,6 +7,7 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     """
     When I run the complexity analysis on it
     Then the number of functions is reported as "1"
+    And the function name is "foo"
 
   Scenario: Multiple javascript functions
     Given javascript code as:
@@ -16,6 +17,10 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     """
     When I run the complexity analysis on it
     Then the number of functions is reported as "2"
+    And the function names are:
+      | Name |
+      | foo  |
+      | bar  |
 
   Scenario: Multiple javascript functions nested
     Given javascript code as:
@@ -28,24 +33,31 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     Then the number of functions is reported as "2"
 
 
-# WIP
-#  Scenario: Single outer function with inner private function
-#    Given javascript code as:
-#    """
-#      function foo() {
-#        var baz = function() {};
-#      };
-#    """
-#    When I run the complexity analysis on it
-#    Then the number of functions is reported as "2"
-#
-#  Scenario: Single outer function with inner public function
-#    Given javascript code as:
-#    """
-#      function foo() {
-#        this.baz = function() {};
-#      };
-#    """
-#    When I run the complexity analysis on it
-#    Then the number of functions is reported as "2"
+  Scenario: Single outer function with inner private function
+    Given javascript code as:
+    """
+      function foo() {
+        var baz = function() {};
+      };
+    """
+    When I run the complexity analysis on it
+    Then the number of functions is reported as "2"
+    And the function names are:
+      | Name     |
+      | foo      |
+      | anonymous/inner |
+
+  Scenario: Single outer function with inner public function
+    Given javascript code as:
+    """
+      function foo() {
+        this.baz = function() {};
+      };
+    """
+    When I run the complexity analysis on it
+    Then the number of functions is reported as "2"
+    And the function names are:
+      | Name    |
+      | foo     |
+      | anonymous/inner |
 
