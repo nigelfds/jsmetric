@@ -34,6 +34,11 @@ class ComplexityAnalyser
       @functions.last[:complexity] += 1
     end
 
+    if node["value"].eql?("try")
+      @functions.last[:complexity] += 1 if node["second"]
+      @functions.last[:complexity] += 1 if node["third"]
+    end
+
     iterate_and_compute_for node["first"]
     iterate_and_compute_for node["second"]
     iterate_and_compute_for node["third"]
