@@ -25,13 +25,13 @@ class ComplexityAnalyser
   def compute_complexity_of(node)
     return if node.nil?
 
-    if node["value"].eql?("function")
+    if node["value"].eql?("function") and not node["arity"].eql?("string")
       node["name"].empty? ? name = "anonymous/inner" : name = node["name"]
       @functions << {:name => name, :complexity => 1}
     end
 
     if @complexity_keywords.include?(node["value"])
-      @functions.last[:complexity] += 1
+      @functions.last[:complexity] += 1 unless @functions.empty?
     end
 
     if node["value"].eql?("try")

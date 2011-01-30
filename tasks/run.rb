@@ -20,7 +20,35 @@ namespace :run do
   desc "Produces a CSV list of LOC & overall complexity per js file in a given directory (recursive)"
   task :loc_complexity_map, :dir do |task, args|
     raise "No Dir specified" unless args.dir
-    raise "Sorry.. this target is WIP :-("
+
+    Dir.chdir(args.dir) do
+      js_files = Dir.glob(File.join("**", "*.js"))
+      js_files.reject! { |file| file.include?(".core.js") }
+      outputs = []
+      js_files.each do |file|
+        contents = File.open(file, 'r') { |f| f.read }
+        analyser = ComplexityAnalyser.new
+        begin
+          analyser.parse contents
+          outputs << {file => analyser.functions}
+        rescue
+          p "WARNING: Could not parse #{file} : SKIPPED #{file}"
+        end
+      end
+
+      p "dir,file,funcs,totalcc"        
+      outputs.each do |output|
+        output.each do |file_name, report|
+          file_complexity = 0
+
+          report.each do |analysis|
+            file_complexity += analysis[:complexity]
+          end
+          p "#{Pathname.new(file_name).dirname},#{Pathname.new(file_name).basename},#{report.size},#{file_complexity}"
+        end
+      end
+    end
+
   end
 
 
