@@ -36,7 +36,7 @@ namespace :run do
         end
       end
 
-      p "dir,file,funcs,totalcc"        
+      puts "dir,file,funcs,totalcc"        
       outputs.each do |output|
         output.each do |file_name, report|
           file_complexity = 0
@@ -44,7 +44,7 @@ namespace :run do
           report.each do |analysis|
             file_complexity += analysis[:complexity]
           end
-          p "#{Pathname.new(file_name).dirname},#{Pathname.new(file_name).basename},#{report.size},#{file_complexity}"
+          puts "#{Pathname.new(file_name).dirname},#{Pathname.new(file_name).basename},#{report.size},#{file_complexity}"
         end
       end
     end
