@@ -1,0 +1,3 @@
+class GraphAnalyser
+  
+end
