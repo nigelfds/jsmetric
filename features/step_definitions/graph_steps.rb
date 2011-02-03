@@ -6,5 +6,5 @@ When /^I run the graph analysis on it$/ do
 end
 
 Then /^the JSON object returned is:$/ do |json|
-  @analyser.json.should eql json
+  JSON.parse(@analyser.json).should eql JSON.parse(json)
 end
