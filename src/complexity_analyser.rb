@@ -24,7 +24,7 @@ class ComplexityAnalyser
   private
   def compute_complexity_of(node)
     return if node.nil?
-
+ ``
     if node["value"].eql?("function") and not node["arity"].eql?("string")
       node["name"].empty? ? name = "anonymous/inner" : name = node["name"]
       @functions << {:name => name, :complexity => 1}

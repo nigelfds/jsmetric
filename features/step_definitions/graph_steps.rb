@@ -2,7 +2,7 @@
 
 When /^I run the graph analysis on it$/ do
   @analyser = GraphAnalyser.new
-  @analyser.parse(code)
+  @analyser.parse(@code)
 end
 
 Then /^the JSON object returned is:$/ do |json|
