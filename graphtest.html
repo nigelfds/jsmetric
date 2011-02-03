@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Graphing JavaScript with JavaScript</title>
+    <script type="text/javascript" src="jsgraphlib/raphael-min.js"></script>
+    <script type="text/javascript" src="jsgraphlib/dracula_graffle.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="jsgraphlib/dracula_graph.js"></script>
+    <script type="text/javascript" src="jsgraphlib/dracula_algorithms.js"></script>
+    <script type="text/javascript" src="jsgraphsource.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            for (var js_class in graphdata) {
+                if (graphdata.hasOwnProperty(js_class)) {
+                    process_class(graphdata[js_class]);
+                }
+            }
+        });
+
+        function process_class(js_class) {
+            var width = 300;
+            var height = 300;
+
+            var g = new Graph();
+            g.edgeFactory.template.style.directed = true;
+            for (js_method in js_class) {
+                if (js_class.hasOwnProperty(js_method)) {
+                    process_method(g, js_method, js_class[js_method]);
+                }
+            }
+            var layouter = new Graph.Layout.Ordered(g, topological_sort(g));
+            var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
+        }
+
+        function process_method(graph, js_method_name, js_calls) {
+            var i;
+            for (i = 0; i < js_calls.length; i++) {
+                graph.addEdge(js_method_name, js_calls[i]);
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+<div id='canvas'></div>
+</body>
+</html>
+<!-- Ideas - to do
+Initial load produces a list of classes
+click a link to view a graph for that class instead of all graphs on one page
+
+-->
