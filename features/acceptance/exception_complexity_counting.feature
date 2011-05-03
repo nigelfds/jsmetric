@@ -1,3 +1,4 @@
+@exceptions
 Feature: Calculate TRY/CATCH complexity for a stand alone Javascript function
 
   Scenario: Single TRY CATCH in a function

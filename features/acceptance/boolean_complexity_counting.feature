@@ -1,3 +1,4 @@
+@booloperator
 Feature: Calculate complexity for code that includes BOOLEAN decisions
 
   Scenario: IF statement with BOOLEAN &&

@@ -1,3 +1,4 @@
+@ifelse
 Feature: Calculate IF/ELSE complexity for a stand alone Javascript function
 
   Scenario: No branches

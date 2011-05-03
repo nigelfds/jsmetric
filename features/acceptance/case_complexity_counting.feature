@@ -1,3 +1,4 @@
+@switch
 Feature: Calculate CASE/DEFAULT complexity for a stand alone Javascript function
 
   Scenario: SWITCH with DEFAULT only

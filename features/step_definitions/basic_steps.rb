@@ -14,7 +14,7 @@ Then /^the number of functions is reported as "([^"]*)"$/ do |num_funcs|
 end
 
 Then /^the complexity is reported as "([^"]*)"$/ do |complexity|
-  @analyser.complexity.should eql complexity.to_i
+  @analyser.functions.first[:complexity].should eql complexity.to_i
 end
 
 And /^the function name is "([^"]*)"$/ do |func_name|
@@ -24,7 +24,7 @@ end
 And /^the function names are:$/ do |table|  
   table.hashes.each do |function|
     match = @analyser.functions.find {|func| func[:name].eql?(function["Name"])}
-    match.should_not be_nil, "Could not find function with name '#{function["Name"]}' "
+    match.should_not be_nil, "Could not find function with name '#{function["Name"]}' in #{@analyser.functions}"
   end
 
 end

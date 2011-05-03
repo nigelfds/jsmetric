@@ -1,3 +1,4 @@
+@loops
 Feature: Calculate LOOP complexity for a stand alone Javascript function
 
   Scenario: Single FOR loop

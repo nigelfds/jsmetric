@@ -3,31 +3,39 @@ class ComplexityAnalyser
   attr_accessor :functions
 
   def parse code
-    @js_lint   = JSLint.new code
+    @js_lint = JSLint.new code
     @tree_hash = @js_lint.tree
     @functions = []
     @complexity_keywords = ["if", "for", "while", "do", "&&", "||", "?", "default", "case"]
+    parse_multiple_expressions @tree_hash
+  end
 
-    @tree_hash.each do |node|
-      compute_complexity_of node
+  def parse_single_expression node
+    return unless node
+
+    if node['value'] and node['value'].eql?("function") and not node['arity'].eql?("string")
+      functions << {:name => node["name"], :complexity => 1}
+      parse_multiple_expressions(node["block"])
+      return
     end
-  end
 
-  def function_count
-    return @functions.size
-  end
+    if node['value'] and
+        node['value'].eql?("var") and
+        node["arity"] and
+        node["arity"].eql?("statement")
+      parse_multiple_expressions node["first"] if node["first"]
+      return
+    end
 
-  def complexity
-    @functions.last[:complexity]
-  end
 
-  private
-  def compute_complexity_of(node)
-    return if node.nil?
- 
-    if node["value"].eql?("function") and not node["arity"].eql?("string")
-      node["name"].empty? ? name = "anonymous/inner" : name = node["name"]
-      @functions << {:name => name, :complexity => 1}
+    if node["arity"] and node["arity"].eql?("infix") and node["value"].eql?("=")
+      block = node["second"]
+      function_name = extract_name_from node["first"]
+      if block and block["value"].eql?("function") and block["arity"].eql?("function")
+        functions << {:name => function_name, :complexity => 1}
+        parse_multiple_expressions(node["block"])
+        return
+      end
     end
 
     if @complexity_keywords.include?(node["value"])
@@ -46,11 +54,23 @@ class ComplexityAnalyser
     iterate_and_compute_for node["else"]
   end
 
-  def iterate_and_compute_for(node)
-    if node.is_a?(Array)
-      node.each { |item| compute_complexity_of item }
+  def parse_multiple_expressions array_of_expressions
+    return unless array_of_expressions
+    array_of_expressions.each do |node|
+      parse_single_expression node
+    end
+  end
+
+  def extract_name_from node
+    return node["value"] unless node["value"].eql?(".") and node["arity"].eql?("infix")
+    return "" + extract_name_from(node["first"]) + "." + extract_name_from(node["second"])
+  end
+
+  def iterate_and_compute_for expression
+    if expression.is_a?(Array)
+      parse_multiple_expressions expression
     else
-      compute_complexity_of node
+      parse_single_expression expression
     end
   end
 

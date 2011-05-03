@@ -1,15 +1,16 @@
+@functions
 Feature: Calculate number of functions for a stand alone Javascript snippet
 
   Scenario: Only statements and no functions
-     Given javascript code as:
-     """
-       var foo = {} || "";
-       var baz = 2;
-     """
-     When I run the complexity analysis on it
-     Then the number of functions is reported as "0"
+    Given javascript code as:
+    """
+      var foo = {} || "";
+      var baz = 2;
+    """
+    When I run the complexity analysis on it
+    Then the number of functions is reported as "0"
 
-
+  @current
   Scenario: Single javascript function
     Given javascript code as:
     """
@@ -32,6 +33,7 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
       | foo  |
       | bar  |
 
+
   Scenario: Multiple javascript functions nested
     Given javascript code as:
     """
@@ -42,8 +44,7 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     When I run the complexity analysis on it
     Then the number of functions is reported as "2"
 
-
-  Scenario: Single outer function with inner private function
+  Scenario: Single outer function with inner private function assigned to a var
     Given javascript code as:
     """
       function foo() {
@@ -53,24 +54,39 @@ Feature: Calculate number of functions for a stand alone Javascript snippet
     When I run the complexity analysis on it
     Then the number of functions is reported as "2"
     And the function names are:
-      | Name     |
-      | foo      |
-      | anonymous/inner |
+      | Name |
+      | foo  |
+      | baz  |
 
-  Scenario: Single outer function with inner public function
+  Scenario: Single outer function with inner private function that is unassigned
     Given javascript code as:
     """
       function foo() {
-        this.baz = function() {};
+        function bar() {};
       };
     """
     When I run the complexity analysis on it
     Then the number of functions is reported as "2"
     And the function names are:
-      | Name    |
-      | foo     |
-      | anonymous/inner |
+      | Name |
+      | foo  |
+      | bar  |
 
+  Scenario: Single outer function with inner public function
+    Given javascript code as:
+    """
+      function foo() {
+        this.baz.flaz = function() {};
+      };
+    """
+    When I run the complexity analysis on it
+    Then the number of functions is reported as "2"
+    And the function names are:
+      | Name          |
+      | foo           |
+      | this.baz.flaz |
+
+  @current
   Scenario: Single javascript function containing the string "function"
     Given javascript code as:
     """
