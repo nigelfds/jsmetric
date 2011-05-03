@@ -55,7 +55,14 @@ namespace :run do
   desc "Produces a CSV list of functions and their Cyclometric complexity in a JS file"
   task :cc, :file do |task, args|
     raise "No file specified" unless args.file
-    raise "Sorry.. this target is WIP :-("
+    contents = File.open(args.file, 'r') { |f| f.read }
+    analyser = ComplexityAnalyser.new
+    begin
+      analyser.parse contents
+      p analyser.functions
+    rescue
+      p "WARNING: Could not parse #{args.file} : SKIPPED #{args.file}"
+    end
   end
 
 end

@@ -12,15 +12,19 @@ This readme assumes you are using a Unix/OSx environment.
 
 $ ./build
 
+*** Dev smoke
+
+$ bundle exec rake run:cc["features/sample_js_files_for_test/foobar.js"]
+
 
 *** Usage
 
 LOC-Function Map:
 
-$ rake run:loc_func_map["path/to/javascript/dir/"]
+$ bundle exec rake run:loc_func_map["path/to/javascript/dir/"]
 
 Cyclometric Complexity
-$ rake run:cc["path/to/javascript/file.js"]
+$ bundle rake run:cc["path/to/javascript/file.js"]
 
 
 *** Backlog/Future Work

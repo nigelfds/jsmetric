@@ -3,18 +3,21 @@ class ComplexityAnalyser
   attr_accessor :functions
 
   def parse code
-    @js_lint = JSLint.new code
-    @tree_hash = @js_lint.tree
     @functions = []
-    @complexity_keywords = ["if", "for", "while", "do", "&&", "||", "?", "default", "case"]
-    parse_multiple_expressions @tree_hash
+    @js_lint = JSLint.new code
+    parse_multiple_expressions @js_lint.tree
   end
+
+
+  # Fixme: Arrrg... this code is crazy. Need to refactor.
+  private
 
   def parse_single_expression node
     return unless node
 
     if node['value'] and node['value'].eql?("function") and not node['arity'].eql?("string")
-      functions << {:name => node["name"], :complexity => 1}
+      function_name = node["name"].empty? ? "Annonymous" : node["name"]
+      functions << {:name => function_name, :complexity => 1}
       parse_multiple_expressions(node["block"])
       return
     end
@@ -29,16 +32,21 @@ class ComplexityAnalyser
 
 
     if node["arity"] and node["arity"].eql?("infix") and node["value"].eql?("=")
-      block = node["second"]
-      function_name = extract_name_from node["first"]
-      if block and block["value"].eql?("function") and block["arity"].eql?("function")
-        functions << {:name => function_name, :complexity => 1}
+      expression = node["second"]
+      if expression and expression["value"].eql?("function") and expression["arity"].eql?("function")
+        functions << {:name => extract_name_from(node["first"]), :complexity => 1}
         parse_multiple_expressions(node["block"])
         return
       end
+
+      if expression and expression["arity"].eql?("prefix") and expression["value"].eql?("{")
+        expression["first"].each do |inner_expression|
+          inner_expression["first"]["name"] = extract_name_from inner_expression
+        end
+      end
     end
 
-    if @complexity_keywords.include?(node["value"])
+    if ["if", "for", "while", "do", "&&", "||", "?", "default", "case"].include?(node["value"])
       @functions.last[:complexity] += 1 unless @functions.empty?
     end
 
