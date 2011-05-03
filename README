@@ -6,6 +6,8 @@ Bundler 1.x
 This project contains a .rvmrc file for use with RVM.
 This readme assumes you are using a Unix/OSx environment.
 
+[WARNING: This project is not yet ready for proper use. Its very much an alpha at the moment]
+
 *** Setting up dev environment
 
 $ ./build
