@@ -101,7 +101,6 @@ Feature: Calculate number of functions and their names for a stand alone Javascr
       | flaz |
       | baz  |
 
-  @current
   Scenario: Single outer function with inner annonymous function
     Given javascript code as:
     """

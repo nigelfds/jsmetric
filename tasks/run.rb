@@ -56,13 +56,7 @@ namespace :run do
   task :cc, :file do |task, args|
     raise "No file specified" unless args.file
     contents = File.open(args.file, 'r') { |f| f.read }
-    analyser = ComplexityAnalyser.new
-    begin
-      analyser.parse contents
-      p analyser.functions
-    rescue
-      p "WARNING: Could not parse #{args.file} : SKIPPED #{args.file}"
-    end
+    CCReport.generate_for contents
   end
 
 end
