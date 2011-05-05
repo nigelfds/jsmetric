@@ -15,10 +15,20 @@ class ComplexityAnalyser
   def parse_single_expression node
     return unless node
 
+    if ["if", "for", "while", "do", "&&", "||", "?", "default", "case"].include?(node["value"])
+      @functions.last[:complexity] += 1 unless @functions.empty?
+    end
+
+    if node["value"].eql?("try")
+      @functions.last[:complexity] += 1 if node["second"]
+      @functions.last[:complexity] += 1 if node["third"]
+    end
+
     if node['value'] and node['value'].eql?("function") and not node['arity'].eql?("string")
       function_name = node["name"].empty? ? "Annonymous" : node["name"]
-      functions << {:name => function_name, :complexity => 1}
+      @functions << {:name => function_name, :complexity => 1}
       parse_multiple_expressions(node["block"])
+      @functions.rotate!(-1)
       return
     end
 
@@ -34,8 +44,9 @@ class ComplexityAnalyser
     if node["arity"] and node["arity"].eql?("infix") and node["value"].eql?("=")
       expression = node["second"]
       if expression and expression["value"].eql?("function") and expression["arity"].eql?("function")
-        functions << {:name => extract_name_from(node["first"]), :complexity => 1}
-        parse_multiple_expressions(node["block"])
+        @functions << {:name => extract_name_from(node["first"]), :complexity => 1}
+        parse_multiple_expressions(expression["block"])
+        @functions.rotate!(-1)
         return
       end
 
@@ -44,15 +55,6 @@ class ComplexityAnalyser
           inner_expression["first"]["name"] = extract_name_from inner_expression
         end
       end
-    end
-
-    if ["if", "for", "while", "do", "&&", "||", "?", "default", "case"].include?(node["value"])
-      @functions.last[:complexity] += 1 unless @functions.empty?
-    end
-
-    if node["value"].eql?("try")
-      @functions.last[:complexity] += 1 if node["second"]
-      @functions.last[:complexity] += 1 if node["third"]
     end
 
     iterate_and_compute_for node["first"]
