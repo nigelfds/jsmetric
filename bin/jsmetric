@@ -9,8 +9,14 @@ $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
 args = ARGV.dup
 ARGV.clear
-file_path = args.shift.strip rescue 'help'
+begin
+    file_path = args.shift.strip
+rescue
+    puts "Missing js file or directory as argument"
+    exit false
+end
 
 require 'report'
 puts Report.for file_path
+
 
