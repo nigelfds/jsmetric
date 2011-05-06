@@ -1,12 +1,31 @@
+[WARNING: This project is not yet ready for proper use. Its very much an alpha at the moment]
+
+*** Installation
+
+$ gem install jsmetric
+
+
+*** Usage
+
+Cyclometric Complexity
+$ ./bin/jsmetric path_to_js_file
+
+
+*** Backlog/Future Work
+
+- JSLint options are buried in the options.js file. Need to pull these out.
+- Refactor the nasty code in the complexity analyser
+- Add Debug messages for when a JS file fails JSLint validation
+
+
+[Notes for developing JSMetric itself futher]
+
 *** To get started you need:
 
 Ruby 1.9.2
 Bundler 1.x
 
 This project contains a .rvmrc file for use with RVM.
-This readme assumes you are using a Unix/OSx environment.
-
-[WARNING: This project is not yet ready for proper use. Its very much an alpha at the moment]
 
 *** Setting up dev environment
 
@@ -14,34 +33,4 @@ $ ./build
 
 *** Dev smoke
 
-$ bundle exec rake run:cc["features/sample_js_files_for_test/foobar.js"]
-
-
-*** Usage
-
-LOC-Function Map:
-
-$ bundle exec rake run:loc_func_map["path/to/javascript/dir/"]
-
-Cyclometric Complexity
-$ bundle rake run:cc["path/to/javascript/file.js"]
-
-
-*** Backlog/Future Work
-
-Target Spec for reference:
-    * add 1 for each if statement
-    * add 1 for each for statement
-    * add 1 for each while loop
-    * add 1 for each do-while loop
-    * add 1 for each && (an implied if statement)
-    * add 1 for each || (an implied if statement)
-    * add 1 for each ? (an implied if statement)
-    * add 1 for each case statement
-    * add 1 for each default statement
-    * add 1 for each catch statement
-    * add 1 for each finally statement
-    * add 1 for each continue statement
-
-TODO: JSLint options are buried in the options.js file. Need to pull these out.
-TODO: Sample runs against existing libs like Jquery, YUI etc.
+$ ./bin/jsmetric features/sample_js_files_for_test/foobar.js

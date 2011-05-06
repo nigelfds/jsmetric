@@ -10,10 +10,11 @@ class CCReport
       analyser.functions.each do |function|
         output += "\n#{function[:name]},#{function[:complexity]}"
       end
-      puts output
     rescue
-      puts "WARNING: Could not parse \n#{source} \n: SKIPPED"
+      output = "WARNING: Could not parse \n#{source} \n: SKIPPED"
     end
+
+    output
   end
 
 end

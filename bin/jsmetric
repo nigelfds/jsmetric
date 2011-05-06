@@ -12,5 +12,5 @@ ARGV.clear
 file_path = args.shift.strip rescue 'help'
 
 require 'report'
-Report.for file_path
+puts Report.for file_path
 
