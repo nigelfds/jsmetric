@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require "rubygems"
+require "bundler/setup"
+
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+
+args = ARGV.dup
+ARGV.clear
+file_path = args.shift.strip rescue 'help'
+
+require 'report'
+Report.for file_path
+

@@ -1,3 +1,5 @@
+#TODO : Replace with execution path through bin/jsmetric
+
 namespace :run do
 
   desc "Produces a CSV list of LOC & number of functions per js file in a given directory (recursive)"
@@ -50,13 +52,4 @@ namespace :run do
     end
 
   end
-
-
-  desc "Produces a CSV list of functions and their Cyclometric complexity in a JS file"
-  task :cc, :file do |task, args|
-    raise "No file specified" unless args.file
-    contents = File.open(args.file, 'r') { |f| f.read }
-    CCReport.generate_for contents
-  end
-
 end

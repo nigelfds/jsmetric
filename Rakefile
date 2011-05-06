@@ -1,10 +1,17 @@
-require(File.join(File.dirname(__FILE__), 'boot'))
+require 'bundler'
+require "bundler/setup"
+require "rubygems"
+
+Bundler::GemHelper.install_tasks
+
+PROJECT_ROOT = File.expand_path("..", __FILE__)
+$:.unshift "#{PROJECT_ROOT}/lib"
+
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
 # Cucumber configurations
-
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new do |t|
   t.cucumber_opts = "--format pretty"
@@ -25,4 +32,6 @@ namespace :jsmetrics do
 end
 
 task :default => ["jsmetrics:build"]
+
+
 
