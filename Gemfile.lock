@@ -1,10 +1,7 @@
 PATH
   remote: .
   specs:
-    jsmetric (0.1)
-      cucumber (= 0.10.0)
-      rake (= 0.8.7)
-      rspec (= 2.4.0)
+    jsmetric (0.1.1)
       therubyracer (= 0.8.0)
 
 GEM
@@ -37,4 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cucumber (~> 0.10.0)
   jsmetric!
+  rake (~> 0.8.7)
+  rspec (~> 2.4.0)
