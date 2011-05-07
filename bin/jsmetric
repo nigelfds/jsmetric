@@ -18,5 +18,3 @@ end
 
 require 'report'
 puts Report.for file_path
-
-

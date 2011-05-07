@@ -7,8 +7,12 @@ $ gem install jsmetric
 
 *** Usage
 
-Cyclometric Complexity
+Cyclometric complexity for a file:
 $ ./bin/jsmetric path_to_js_file
+
+Cyclometric complexity for all .js files in a Directory
+$ ./bin/jsmetric path_to_dir
+
 
 
 *** Backlog/Future Work
